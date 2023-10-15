@@ -14,10 +14,6 @@ import 'regenerator-runtime/runtime';
 
 ///////////////////////////////////////
 
-// if (module.hot) {
-//   module.hot.accept();
-// }
-
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
@@ -36,7 +32,6 @@ const controlRecipes = async function () {
 
     //2 loading recipe
     await model.loadRecipe(id);
-    // const { recipe } = model.state;
 
     //3 rendering recipe
     recipeView.render(model.state.recipe);
@@ -59,7 +54,6 @@ const controlSearcjResults = async function () {
     await model.loadSearchResults(query);
 
     // 3 Render results
-    // resultsView.render(model.state.search.results);
     resultsView.render(model.getSearchResultsPage());
 
     // 4  Render initial pagination button
@@ -68,8 +62,6 @@ const controlSearcjResults = async function () {
     console.error(error);
   }
 };
-// controlSearcjResults();
-// controlRecipes();
 const controlPagination = function (goToPage) {
   // 1 Render new results
 
@@ -83,10 +75,8 @@ const controlServings = function (newServings) {
   model.updateServings(newServings);
 
   //Update the recipe view as well
-  // recipeView.render(model.state.recipe);
   recipeView.update(model.state.recipe);
 };
-// window.addEventListener('hashchange', controlRecipes);
 
 //controler for adding new book mark
 const controlAddBookmark = function () {
@@ -109,6 +99,7 @@ const controlAddRecipe = async function (newRecipe) {
   try {
     //show loading spinner
     addRecipeView.renderSpinner();
+
     //Upload recipe
     await model.uploadRecipe(newRecipe);
 
@@ -133,10 +124,6 @@ const controlAddRecipe = async function (newRecipe) {
   }
 };
 
-const newFeature = function () {
-  console.log('Welcome to the application!');
-};
-
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
@@ -145,6 +132,5 @@ const init = function () {
   searchView.addHandlerSearch(controlSearcjResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpLoad(controlAddRecipe);
-  newFeature();
 };
 init();
